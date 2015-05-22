@@ -2,10 +2,10 @@
 # https://github.com/msteinhoff/atlassian-backup
 # 
 # Default configuration
-JIRA_HOME_DIR=/var/atlassian/application-data/jira
-JIRA_SCHEMA_NAME=jira
-BACKUP_HOME_DIR=/tmp/jira-backup
-MYSQLDUMP_PARAMS="--single-transaction --skip-quote-names --hex-blob"
+JIRA_HOME_DIR=${JIRA_HOME_DIR:-/var/atlassian/application-data/jira}
+JIRA_SCHEMA_NAME=${JIRA_SCHEMA_NAME:-jira}
+BACKUP_HOME_DIR=${BACKUP_HOME_DIR:-/tmp/jira-backup}
+MYSQLDUMP_PARAMS=${MYSQLDUMP_PARAMS:-"--single-transaction --skip-quote-names --hex-blob"}
 
 # Source config file if available
 [ -r /etc/jira-backup.conf ] && source /etc/jira-backup.conf
