@@ -31,16 +31,22 @@ function notify
     log_stdout "$@"
 }
 
-function notify_failure
+function notify_error
 {
     log_stderr "Error: $@"
+}
+
+function notify_failure
+{
+    notify_error "$@"
+    
     log_stderr "Exiting now."
     exit 1
 }
 
 function notify_failure_and_cleanup
 {
-    log_stderr "Error: $@"
+    notify_error "$@"
 
     if [ -d $WORK_DIR ]
     then
