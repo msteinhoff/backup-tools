@@ -4,7 +4,7 @@ ACTION=${ACTION:-backup}
 LOGFILE=/tmp/run-and-notify.log
 GLOBAL_LOGFILE=/var/log/run-and-notify.log
 
-check_config()
+function check_config
 {
     if [ -z "$RECIPIENTS" ];
     then
@@ -15,12 +15,12 @@ check_config()
     fi
 }
 
-run()
+function run
 {
     eval $COMMAND > $LOGFILE 2>&1
 }
 
-notify()
+function notify
 {
     result=$1
     hostname=`hostname`
@@ -28,7 +28,7 @@ notify()
     cat -v $LOGFILE | mail -s "$result on $hostname" $RECIPIENTS
 }
 
-cleanup_logs()
+function cleanup_logs
 {
     [ -f $GLOBAL_LOGFILE ] && echo "" >> $GLOBAL_LOGFILE
     cat $LOGFILE >> $GLOBAL_LOGFILE
