@@ -64,6 +64,16 @@ function notify_failure_and_cleanup
     exit 1
 }
 
+function check_config
+{
+    [ -z "$JIRA_HOME_DIR" ] && {  notify_error "JIRA_HOME_DIR empty"; return 1 }
+    [ -z "$JIRA_SCHEMA_NAME" ] && {  notify_error "JIRA_SCHEMA_NAME empty"; return 1 }
+    [ -z "$BACKUP_HOME_DIR" ] && {  notify_error "BACKUP_HOME_DIR empty"; return 1 }
+
+    [ ! -d "$JIRA_HOME_DIR" ] && {  notify_error "JIRA_HOME_DIR $JIRA_HOME_DIR is not a directory"; return 1 }
+    [ ! -d "$BACKUP_HOME_DIR" ] && {  notify_error "BACKUP_HOME_DIR $BACKUP_HOME_DIR is not a directory"; return 1 }
+}
+
 function create_work_directory
 {
     notify "Creating backup '$BACKUP_NAME' in '$BACKUP_HOME_DIR'"
@@ -90,8 +100,6 @@ function copy_application_data
 
 function create_archive
 {
-    # TODO Check if $BACKUP_NAME is not empty and exists to avoid tar'ing / 
-
     notify "Creating tar archive of database dump and data directory"
     cd $BACKUP_HOME_DIR && tar czf $ARCHIVE_NAME $BACKUP_NAME/ || return $?
     
@@ -106,6 +114,8 @@ function remove_work_directory
     rm -rf $WORK_DIR
 
 }
+
+check_config || notify_failure "Invalid config values"
 
 create_work_directory || notify_failure_and_cleanup "Could not create work directory"
 
