@@ -1,8 +1,8 @@
 # run-and-notify
 
-This is just a generic canary script that executes a given command and then
-email the result to a list of recipients. Handy to use e.g. in cron jobs or when
-a full-blown monitoring system is overkill.
+run-and-notifiy is a generic canary script that executes a given command and
+then emails the result to a list of recipients. Handy to use e.g. in cron jobs
+or when a full-blown monitoring system is overkill.
 
 When the command is run, the following scenarios may happen:
 
