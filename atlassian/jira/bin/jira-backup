@@ -1,0 +1,109 @@
+#!/bin/bash
+# Default configuration
+JIRA_HOME_DIR=/mnt/datastore1/jira/home
+JIRA_SCHEMA_NAME=jira
+BACKUP_HOME_DIR=/mnt/datastore1/jira/backup
+MYSQLDUMP_PARAMS="--single-transaction --skip-quote-names --hex-blob"
+
+# Source config file if available
+[ -r /etc/jira-backup.conf ] && source /etc/jira-backup.conf
+
+BACKUP_NAME=jira-`date +%Y%m%d-%H%M%S`
+WORK_DIR=$BACKUP_HOME_DIR/$BACKUP_NAME
+ARCHIVE_NAME=$BACKUP_NAME.tar.gz
+
+function log_stdout
+{
+    TIME=`date +%H:%M:%S`
+    echo "($TIME) $@"
+}
+
+function log_stderr
+{
+    TIME=`date +%H:%M:%S`
+    echo "($TIME) $@" >&2
+}
+
+function notify
+{
+    log_stdout "$@"
+}
+
+function notify_failure
+{
+    log_stderr "Error: $@"
+    log_stderr "Exiting now."
+    exit 1
+}
+
+function notify_failure_and_cleanup
+{
+    log_stderr "Error: $@"
+
+    if [ -d $WORK_DIR ]
+    then
+        log_stderr "Removing work directory"
+        rm -rf $WORK_DIR
+    fi
+
+    if [ -f $BACKUP_HOME_DIR/$ARCHIVE_NAME ]
+    then
+        log_stderr "Removing backup archive"
+        rm -f $BACKUP_HOME_DIR/$ARCHIVE_NAME
+    fi
+
+    log_stderr "Exiting now."
+    exit 1
+}
+
+function create_work_directory
+{
+    notify "Creating backup '$BACKUP_NAME' in '$BACKUP_HOME_DIR'"
+    mkdir -p $WORK_DIR || return $?
+}
+
+function dump_database
+{
+    notify "Creating database dump"
+    mysqldump $MYSQLDUMP_PARAMS $JIRA_SCHEMA_NAME > $WORK_DIR/database.sql || return $?
+    
+    local size=`stat -c%s $WORK_DIR/database.sql`
+    notify "Dumped '$JIRA_SCHEMA_NAME' database schema, size: $size bytes"
+}
+
+function copy_application_data
+{
+    notify "Copying jira data directory"
+    cp -r $JIRA_HOME_DIR/data $WORK_DIR/data || return $?
+    
+    local size=`du -bs $WORK_DIR/data | cut -f 1`
+    notify "Copied '$JIRA_HOME_DIR/data' directory, size: $size bytes"
+}
+
+function create_archive
+{
+    # TODO Check if $BACKUP_NAME is not empty and exists to avoid tar'ing / 
+
+    notify "Creating tar archive of database dump and data directory"
+    cd $BACKUP_HOME_DIR && tar czf $ARCHIVE_NAME $BACKUP_NAME/ || return $?
+    
+    local size=`stat -c%s $BACKUP_HOME_DIR/$ARCHIVE_NAME`
+    notify "Created tar archive '$BACKUP_HOME_DIR/$ARCHIVE_NAME', size: $size bytes"
+}
+
+function remove_work_directory
+{
+    notify "Removing work directory"
+    rm -rf $WORK_DIR
+
+}
+
+create_work_directory || notify_failure_and_cleanup "Could not create work directory"
+
+dump_database || notify_failure_and_cleanup "Could not create schema dump"
+
+copy_application_data || notify_failure_and_cleanup "Could not copy application data"
+
+create_archive || notify_failure_and_cleanup "Could not create archive"
+
+remove_work_directory || notify_failure "Backup created but could not remove work directory"

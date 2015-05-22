@@ -1,0 +1,29 @@
+#!/bin/bash
+RECIPIENTS="system@catapullt.de"
+LOGFILE=/tmp/fluppt-archive.log
+GLOBAL_LOGFILE=/var/log/fluppt-backup.log
+FLUPPT_BACKUP=/usr/local/fluppt/backup
+
+export FLUPPT_BACKUP
+
+create_archive()
+{
+    $FLUPPT_BACKUP/bin/archive > $LOGFILE 2>&1
+}
+
+notify_bofh()
+{
+    hostname=`hostname`
+    # http://ask.fclose.com/305/plain-pipelined-content-application-octet-stream-attachment
+    cat -v $LOGFILE | mail -s "[fluppt] $1 backup on $hostname" $RECIPIENTS
+}
+
+cleanup_logs()
+{
+    [ -f $GLOBAL_LOGFILE ] && echo "" >> $GLOBAL_LOGFILE
+    cat $LOGFILE >> $GLOBAL_LOGFILE
+    rm -f $LOGFILE
+}
+
+create_archive && notify_bofh successful || notify_bofh failed
+cleanup_logs
