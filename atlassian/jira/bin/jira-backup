@@ -1,4 +1,6 @@
 #!/bin/bash
+# https://github.com/msteinhoff/atlassian-backup
+# 
 # Default configuration
 JIRA_HOME_DIR=/var/atlassian/application-data/jira
 JIRA_SCHEMA_NAME=jira
