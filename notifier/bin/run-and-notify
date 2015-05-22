@@ -1,21 +1,31 @@
 #!/bin/bash
-RECIPIENTS="system@catapullt.de"
-LOGFILE=/tmp/fluppt-archive.log
-GLOBAL_LOGFILE=/var/log/fluppt-backup.log
-FLUPPT_BACKUP=/usr/local/fluppt/backup
+COMMAND="$@"
+ACTION=${ACTION:-backup}
+LOGFILE=/tmp/run-and-notify.log
+GLOBAL_LOGFILE=/var/log/run-and-notify.log
 
-export FLUPPT_BACKUP
-
-create_archive()
+check_config()
 {
-    $FLUPPT_BACKUP/bin/archive > $LOGFILE 2>&1
+    if [ -z "$RECIPIENTS" ];
+    then
+        echo "Error: RECIPIENTS required"
+        return 1
+    else
+        return 0
+    fi
 }
 
-notify_bofh()
+run()
 {
+    eval $COMMAND > $LOGFILE 2>&1
+}
+
+notify()
+{
+    result=$1
     hostname=`hostname`
     # http://ask.fclose.com/305/plain-pipelined-content-application-octet-stream-attachment
-    cat -v $LOGFILE | mail -s "[fluppt] $1 backup on $hostname" $RECIPIENTS
+    cat -v $LOGFILE | mail -s "$result on $hostname" $RECIPIENTS
 }
 
 cleanup_logs()
@@ -25,5 +35,8 @@ cleanup_logs()
     rm -f $LOGFILE
 }
 
-create_archive && notify_bofh successful || notify_bofh failed
+check_config || exit 1
+
+run "$@" && notify "successful $ACTION" || notify "failed $ACTION"
+
 cleanup_logs
