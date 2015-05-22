@@ -66,12 +66,14 @@ function fail_and_cleanup
 
 function check_config
 {
-    [ -z "$JIRA_HOME_DIR" ] && {  notify_error "JIRA_HOME_DIR empty"; return 1 }
-    [ -z "$JIRA_SCHEMA_NAME" ] && {  notify_error "JIRA_SCHEMA_NAME empty"; return 1 }
-    [ -z "$BACKUP_HOME_DIR" ] && {  notify_error "BACKUP_HOME_DIR empty"; return 1 }
+    [ -z "$JIRA_HOME_DIR" ] && { notify_error "JIRA_HOME_DIR empty"; return 1; }
+    [ -z "$JIRA_SCHEMA_NAME" ] && { notify_error "JIRA_SCHEMA_NAME empty"; return 1; }
+    [ -z "$BACKUP_HOME_DIR" ] && { notify_error "BACKUP_HOME_DIR empty"; return 1; }
 
-    [ ! -d "$JIRA_HOME_DIR" ] && {  notify_error "JIRA_HOME_DIR $JIRA_HOME_DIR is not a directory"; return 1 }
-    [ ! -d "$BACKUP_HOME_DIR" ] && {  notify_error "BACKUP_HOME_DIR $BACKUP_HOME_DIR is not a directory"; return 1 }
+    [ ! -d "$JIRA_HOME_DIR" ] && { notify_error "JIRA_HOME_DIR $JIRA_HOME_DIR is not a directory"; return 1; }
+    [ ! -d "$BACKUP_HOME_DIR" ] && { notify_error "BACKUP_HOME_DIR $BACKUP_HOME_DIR is not a directory"; return 1; }
+
+    return 0
 }
 
 function create_work_directory
