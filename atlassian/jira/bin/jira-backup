@@ -36,7 +36,7 @@ function notify_error
     log_stderr "Error: $@"
 }
 
-function notify_failure
+function fail
 {
     notify_error "$@"
     
@@ -44,7 +44,7 @@ function notify_failure
     exit 1
 }
 
-function notify_failure_and_cleanup
+function fail_and_cleanup
 {
     notify_error "$@"
 
@@ -115,14 +115,14 @@ function remove_work_directory
 
 }
 
-check_config || notify_failure "Invalid config values"
+check_config || fail "Invalid config values"
 
-create_work_directory || notify_failure_and_cleanup "Could not create work directory"
+create_work_directory || fail_and_cleanup "Could not create work directory"
 
-dump_database || notify_failure_and_cleanup "Could not create schema dump"
+dump_database || fail_and_cleanup "Could not create schema dump"
 
-copy_application_data || notify_failure_and_cleanup "Could not copy application data"
+copy_application_data || fail_and_cleanup "Could not copy application data"
 
-create_archive || notify_failure_and_cleanup "Could not create archive"
+create_archive || fail_and_cleanup "Could not create archive"
 
-remove_work_directory || notify_failure "Backup created but could not remove work directory"
+remove_work_directory || fail "Backup created but could not remove work directory"
