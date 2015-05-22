@@ -14,4 +14,4 @@ When the command is run, the following scenarios may happen:
 
 e.g. in combination with jira-backup:
 
-$ RECIPIENTS="test@example.org" ACTION="jira backup" /usr/local/bin/run-and-notify /usr/local/bin/jira-backup
+    $ RECIPIENTS="test@example.org" ACTION="jira backup" /usr/local/bin/run-and-notify /usr/local/bin/jira-backup
