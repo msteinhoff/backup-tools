@@ -11,7 +11,11 @@ Atlassian wants you to backup the database and the JIRA data directory.
 The following assumptions are made:
 
 - JIRA is configured to use MySQL (currently the only supported DBMS)
-- MySQL credentials are stored under `/root/.my.cnf` (with chmod `0600`)
+- MySQL credentials are stored under `/root/.my.cnf`
+
+    *Note:* When storing plaintext credentials on disk, make sure the file is
+    only readable by root (chmod `0600`).
+
 - There is a dedicated JIRA home directory
 - There is a separate directory to hold all JIRA backups
 - The backup directory has enough free space available for a database dump, a
