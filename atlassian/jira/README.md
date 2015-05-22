@@ -62,3 +62,15 @@ Possible options:
     Usually there is no need to change this.
 
     Default: `--single-transaction --skip-quote-names --hex-blob`
+
+## Example
+
+    $ jira-backup
+    (22:01:07) Creating backup 'jira-20150522-220107' in '/mnt/datastore1/jira/backup'
+    (22:01:07) Creating database dump
+    (22:01:09) Dumped 'jira' database schema, size: 3836788 bytes
+    (22:01:09) Copying jira data directory
+    (22:01:10) Copied '/mnt/datastore1/jira/home/data' directory, size: 40122228 bytes
+    (22:01:10) Creating tar archive of database dump and data directory
+    (22:01:13) Created tar archive '/mnt/datastore1/jira/backup/jira-20150522-220107.tar.gz', size: 33824766 bytes, SHA1: cd2ba2b68d7f409b5e92b3d8f955708f5bc4746f
+    (22:01:13) Removing work directory
