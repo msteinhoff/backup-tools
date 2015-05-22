@@ -1,8 +1,8 @@
 #!/bin/bash
 # Default configuration
-JIRA_HOME_DIR=/mnt/datastore1/jira/home
+JIRA_HOME_DIR=/var/atlassian/application-data/jira
 JIRA_SCHEMA_NAME=jira
-BACKUP_HOME_DIR=/mnt/datastore1/jira/backup
+BACKUP_HOME_DIR=/tmp/jira-backup
 MYSQLDUMP_PARAMS="--single-transaction --skip-quote-names --hex-blob"
 
 # Source config file if available

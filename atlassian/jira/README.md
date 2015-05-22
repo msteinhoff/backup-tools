@@ -41,7 +41,7 @@ Possible options:
 
     The dedicated JIRA home directory (should contain a directory named 'data').
 
-    Default: `/mnt/datastore1/jira/home`
+    Default: `/var/atlassian/application-data/jira`
 
 - `JIRA_SCHEMA_NAME`
 
@@ -53,7 +53,7 @@ Possible options:
     
     The separate backup directory.
 
-    Default: `/mnt/datastore1/jira/backup`
+    Default: `/tmp/jira-backup`
 
 - `MYSQLDUMP_PARAMS`
 
