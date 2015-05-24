@@ -73,11 +73,13 @@ archive. This can be used for rudimentary consistency checks.
 ## Example
 
     $ jira-backup
-    (22:01:07) Creating backup 'jira-20150522-220107' in '/mnt/datastore1/jira/backup'
-    (22:01:07) Creating database dump
-    (22:01:09) Dumped 'jira' database schema, size: 3836788 bytes
-    (22:01:09) Copying jira data directory
-    (22:01:10) Copied '/mnt/datastore1/jira/home/data' directory, size: 40122228 bytes
-    (22:01:10) Creating tar archive of database dump and data directory
-    (22:01:13) Created tar archive '/mnt/datastore1/jira/backup/jira-20150522-220107.tar.gz', size: 33824766 bytes, SHA1: cd2ba2b68d7f409b5e92b3d8f955708f5bc4746f
-    (22:01:13) Removing work directory
+    (00:21:56) Creating backup 'jira-20150525-002156' in '/mnt/datastore1/jira/backup'
+    (00:21:56) Creating database dump
+    (00:21:58) Dumped 'jira' database schema, size: 3836685 bytes
+    (00:21:58) Copying jira data directory
+    (00:21:59) Copied '/mnt/datastore1/jira/home/data' directory, size: 40122228 bytes
+    (00:21:59) Bound backup archive to application version '6.3.8'
+    (00:21:59) Creating tar archive of database dump and data directory
+    (00:22:02) Created backup archive '/mnt/datastore1/jira/backup/jira-20150525-002156.tar.gz', size: 33823983 bytes
+    (00:22:02) Checksum of backup archive '/mnt/datastore1/jira/backup/jira-20150525-002156.tar.gz': 4f61c23507da8dd5641e41c826c24fccf2356875
+    (00:22:02) Removing work directory
