@@ -43,6 +43,19 @@ archive. This can be used for rudimentary consistency checks.
 
     Default: `jira`
 
+- `JIRA_VERSION_NAME`
+
+    JIRA version name that will be written to the backup archive. This is just
+    an informal reminder about the appliction version that was used to create
+    the backup in case a restore is necessary.
+
+    I did not find an easy way to automatically retrieve the version from a
+    JIRA installation, so unfortunately it must be set manually when the
+    application is installed or updated or (preferably) by the configuration
+    management system.
+
+    Default: `0.0.0`
+
 - `BACKUP_HOME_DIR`
     
     The separate backup directory.
