@@ -4,7 +4,7 @@ Official backup guide:
 
 https://confluence.atlassian.com/display/JIRA/Backing+Up+Data
 
-## Backup design
+## Design
 
 Atlassian wants you to backup the database and the JIRA data directory.
 
@@ -21,21 +21,13 @@ The following assumptions are made:
 - The backup directory has enough free space available for a database dump, a
 copy of the JIRA data directory and a tar.gz archive
 
-During backup, a temporary work directory is created. Then, mysqldump is
-executed with `--single-transaction` to create a consistent database backup.
-The data directory is copied with `cp -r`. Everything is then packed into a
-tar.gz archive.
+During backup, mysqldump is executed with `--single-transaction` to create a
+consistent database dump in the backup work directory. The `data` directory is
+copied with `cp -r`. Everything is then packed into a tar.gz archive.
 
 The script writes a timestamped log to stdout/stderr, including the size of the
 database dump and data directory in bytes and the checksum of the created
 archive. This can be used for rudimentary consistency checks.
-
-The backup script makes no assumption about how the archive file is processed
-after it was created. Possible options:
-
-- Write all backup data directly to a network folder (e.g. NFS)
-- Copy the backup archive to another host via SSH or rsync (active copy)
-- Copy the backup archive from another host via SSH or rsync (passive copy)
 
 ## Configuration
 
