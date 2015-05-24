@@ -47,3 +47,17 @@ execution notifications via email.
 
 This way, an administrator can see if the backup was successful, failed, or did
 not run at all.
+
+# Whishlist
+
+- Support other DBMS than MySQL
+
+# Contributing
+
+So you want to help me work on this? Awesome! :)
+
+To avoid frustration, please do not just fork the repository and start sending
+PRs. Of course nobody prevents you from doing this, but I might reject it.
+
+Instead, create an issue to start a discussion on what you'd like to achieve and
+then we can see if it makes sense to implement here. :)
