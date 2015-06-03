@@ -1,0 +1,95 @@
+#!/bin/bash
+# https://github.com/msteinhoff/atlassian-backup
+# 
+# Default configuration
+STASH_BACKUP_CLIENT_JAR=${STASH_BACKUP_CLIENT_JAR:-/opt/atlassian/stash-backup/stash-backup-client.jar}
+STASH_HOME_DIR=${STASH_HOME_DIR:-/var/atlassian/application-data/stash}
+STASH_USER=${STASH_USER:-}
+STASH_PASSWORD=${STASH_PASSWORD:-}
+STASH_BASEURL=${STASH_BASEURL:-}
+BACKUP_HOME_DIR=${BACKUP_HOME_DIR:-/tmp/stash-backup}
+
+# Source config file if available
+[ -r /etc/stash-backup.conf ] && source /etc/stash-backup.conf
+
+# Archive name will be determined after backup archive was created by stash
+# backup client
+ARCHIVE_NAME=
+
+function log_stdout
+{
+    TIME=`date +%H:%M:%S`
+    echo "($TIME) $@"
+}
+
+function log_stderr
+{
+    TIME=`date +%H:%M:%S`
+    echo "($TIME) $@" >&2
+}
+
+function notify
+{
+    log_stdout "$@"
+}
+
+function notify_error
+{
+    log_stderr "Error: $@"
+}
+
+function fail
+{
+    notify_error "$@"
+    
+    log_stderr "Exiting now."
+    exit 1
+}
+
+function check_config
+{
+    [ -z "$STASH_BACKUP_CLIENT_JAR" ] && { notify_error "STASH_BACKUP_CLIENT_JAR empty"; return 1; }
+    [ -z "$STASH_HOME_DIR" ] && { notify_error "STASH_HOME_DIR empty"; return 1; }
+    [ -z "$STASH_USER" ] && { notify_error "STASH_USER empty"; return 1; }
+    [ -z "$STASH_PASSWORD" ] && { notify_error "STASH_PASSWORD empty"; return 1; }
+    [ -z "$STASH_BASEURL" ] && { notify_error "STASH_BASEURL empty"; return 1; }
+    [ -z "$BACKUP_HOME_DIR" ] && { notify_error "BACKUP_HOME_DIR empty"; return 1; }
+
+    [ ! -f "$STASH_BACKUP_CLIENT_JAR" || ! -r "$STASH_BACKUP_CLIENT_JAR" ] && { notify_error "STASH_BACKUP_CLIENT_JAR $STASH_BACKUP_CLIENT_JAR is not a readable file"; return 1; }
+    [ ! -d "$BACKUP_HOME_DIR" || ! -w "$BACKUP_HOME_DIR" ] && { notify_error "BACKUP_HOME_DIR $BACKUP_HOME_DIR is not a writable directory"; return 1; }
+
+    return 0
+}
+
+function execute_backup_client
+{
+    notify "Executing stash backup client"
+
+    java \
+        -jar $STASH_BACKUP_CLIENT_JAR \
+        -Dstash.home="$STASH_HOME_DIR"
+        -Dstash.user="$STASH_USER" \
+        -Dstash.password="$STASH_PASSWORD" \
+        -Dstash.baseUrl="$STASH_BASEURL" || return $?
+
+    # TODO how do we get the backup file name?
+    # use some implicit find magic, e.g. find latest .tar file in backup home dir?
+    ARCHIVE_NAME=idunnolol.tar
+    
+    local size=`stat -c%s $BACKUP_HOME_DIR/$ARCHIVE_NAME`
+    notify "Created backup archive '$BACKUP_HOME_DIR/$ARCHIVE_NAME', size: $size bytes"
+}
+
+function calculate_checksum
+{
+    sha1sum $BACKUP_HOME_DIR/$ARCHIVE_NAME > $BACKUP_HOME_DIR/$ARCHIVE_NAME.sha1
+
+    local checksum=`cut -d ' ' -f 1 $BACKUP_HOME_DIR/$ARCHIVE_NAME.sha1`
+    notify "Checksum of backup archive '$BACKUP_HOME_DIR/$ARCHIVE_NAME': $checksum"
+}
+
+check_config || fail "Invalid config values"
+
+execute_backup_client || fail "Could not perform backup with stash backup client"
+
+calculate_checksum || fail "Backup created but could not calculate checksum"
