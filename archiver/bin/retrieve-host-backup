@@ -1,0 +1,12 @@
+#!/bin/bash
+# TODO WIP
+# 
+[ "$1" = "" ] && { echo "usage: $0 [ssh-target-name] [remote-directory] [local-directory]"; exit 1; }
+
+TARGET=$1
+DIR_REMOTE_DATA=$2
+DIR_LOCAL_DATA=$3
+
+[ ! -d $DIR_LOCAL_DATA/$TARGET ] && mkdir -p $DIR_LOCAL_DATA/$TARGET
+
+rsync -v --archive --remove-source-files --numeric-ids $TARGET:$DIR_REMOTE_DATA $DIR_LOCAL_DATA/$TARGET

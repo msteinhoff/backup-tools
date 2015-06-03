@@ -78,6 +78,11 @@ new backup archives are then pulled and removed
     backups. This way, an administrator can see if the backup was successful,
     failed, or did not run at all.
 
+- `/archiver`
+
+    The archiver is installed on a backup host and is used to pull data off the
+    application hosts.
+
 # Whishlist
 
 - Support other DBMS than MySQL for Atlassian applications
