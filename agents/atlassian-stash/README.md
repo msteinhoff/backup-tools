@@ -49,12 +49,12 @@ used for rudimentary consistency checks.
 - `STASH_HOME_DIR`
 
     Value of the `stash.home` java property.
-    
+
     From the Stash backup client documentation:
 
     > Defines the location of the home directory of the Stash instance you wish
     > to back up or restore to.
-    
+
     Default: `/var/atlassian/application-data/stash`
 
 - `STASH_USER`
@@ -91,7 +91,7 @@ used for rudimentary consistency checks.
     Default: Not set
 
 - `BACKUP_HOME_DIR`
-    
+
     Value of the `backup.home` java property.
 
     From the Stash backup client documentation:

@@ -1,6 +1,6 @@
 #!/bin/bash
 # https://github.com/catapullt/backup-tools
-# 
+#
 # Default configuration
 STASH_BACKUP_CLIENT_JAR=${STASH_BACKUP_CLIENT_JAR:-/opt/atlassian/stash-backup/stash-backup-client.jar}
 STASH_HOME_DIR=${STASH_HOME_DIR:-/var/atlassian/application-data/stash}
@@ -41,7 +41,7 @@ function notify_error
 function fail
 {
     notify_error "$@"
-    
+
     log_stderr "Exiting now."
     exit 1
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 # https://github.com/catapullt/backup-tools
-# 
+#
 # Default configuration
 JIRA_HOME_DIR=${JIRA_HOME_DIR:-/var/atlassian/application-data/jira}
 JIRA_VERSION_NAME=${JIRA_VERSION_NAME:-"0.0.0"}
@@ -40,7 +40,7 @@ function notify_error
 function fail
 {
     notify_error "$@"
-    
+
     log_stderr "Exiting now."
     exit 1
 }
@@ -87,7 +87,7 @@ function dump_database
 {
     notify "Creating database dump"
     mysqldump $MYSQLDUMP_PARAMS $JIRA_SCHEMA_NAME > $WORK_DIR/database.sql || return $?
-    
+
     local size=`stat -c%s $WORK_DIR/database.sql`
     notify "Dumped '$JIRA_SCHEMA_NAME' database schema, size: $size bytes"
 }
@@ -96,7 +96,7 @@ function copy_application_data
 {
     notify "Copying jira data directory"
     cp -r $JIRA_HOME_DIR/data $WORK_DIR/data || return $?
-    
+
     local size=`du -bs $WORK_DIR/data | cut -f 1`
     notify "Copied '$JIRA_HOME_DIR/data' directory, size: $size bytes"
 }
@@ -111,7 +111,7 @@ function create_archive
 {
     notify "Creating tar archive of database dump and data directory"
     cd $BACKUP_HOME_DIR && tar czf $ARCHIVE_NAME $BACKUP_NAME/ || return $?
-    
+
     local size=`stat -c%s $BACKUP_HOME_DIR/$ARCHIVE_NAME`
     notify "Created backup archive '$BACKUP_HOME_DIR/$ARCHIVE_NAME', size: $size bytes"
 }

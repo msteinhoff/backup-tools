@@ -1,6 +1,6 @@
 #!/bin/bash
 # https://github.com/catapullt/backup-tools
-# 
+#
 # TODO WIP
 
 [ "$1" = "" ] && { echo "usage: $0 [ssh-target-name] [remote-directory] [local-directory]"; exit 1; }

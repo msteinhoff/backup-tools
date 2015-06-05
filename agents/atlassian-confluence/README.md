@@ -70,7 +70,7 @@ archive. This can be used for rudimentary consistency checks.
     Default: `0.0.0`
 
 - `BACKUP_HOME_DIR`
-    
+
     The separate backup directory.
 
     Default: `/tmp/confluence-backup`
@@ -78,7 +78,7 @@ archive. This can be used for rudimentary consistency checks.
 - `MYSQLDUMP_PARAMS`
 
     Additional parameters passed to mysqldump.
-    
+
     Usually there is no need to change this.
 
     Default: `--single-transaction --skip-quote-names --hex-blob`
