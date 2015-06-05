@@ -83,7 +83,7 @@ new backup archives are then pulled and removed
     The archiver is installed on a backup host and is used to pull data off the
     application hosts.
 
-# Whishlist
+# Wishlist
 
 - Support other DBMS than MySQL for Atlassian applications
 - Other notification transports than e-mail (e.g. HipChat)
