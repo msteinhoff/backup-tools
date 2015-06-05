@@ -88,6 +88,7 @@ new backup archives are then pulled and removed
 - Support other DBMS than MySQL for Atlassian applications
 - Other notification transports than e-mail (e.g. HipChat)
 - Time-series logging of backup sizes, notification on variations
+- GPG signed and/or encrypted backup archives
 
 # Contributing
 
