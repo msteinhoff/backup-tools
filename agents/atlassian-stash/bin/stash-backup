@@ -1,5 +1,5 @@
 #!/bin/bash
-# https://github.com/msteinhoff/atlassian-backup
+# https://github.com/catapullt/backup-tools
 # 
 # Default configuration
 STASH_BACKUP_CLIENT_JAR=${STASH_BACKUP_CLIENT_JAR:-/opt/atlassian/stash-backup/stash-backup-client.jar}

@@ -1,5 +1,5 @@
 #!/bin/bash
-# https://github.com/msteinhoff/atlassian-backup
+# https://github.com/catapullt/backup-tools
 # 
 # Default configuration
 JIRA_HOME_DIR=${JIRA_HOME_DIR:-/var/atlassian/application-data/jira}

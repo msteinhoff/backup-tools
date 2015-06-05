@@ -1,5 +1,5 @@
 #!/bin/bash
-# https://github.com/msteinhoff/atlassian-backup
+# https://github.com/catapullt/backup-tools
 # 
 # Default configuration
 CONFLUENCE_HOME_DIR=${CONFLUENCE_HOME_DIR:-/var/atlassian/application-data/confluence}
