@@ -103,4 +103,32 @@ used for rudimentary consistency checks.
 
 ## Example
 
-    TODO, no internet on ICE 512 and no stash VM available to test the script :(
+    $ stash-backup
+    (19:48:09) Executing stash backup client
+    2015-06-05 19:48:14,976 INFO         Initializing
+    2015-06-05 19:48:20,941 INFO         Using Stash 3.7.0
+    2015-06-05 19:48:21,323 INFO         Contacting Stash
+    2015-06-05 19:48:21,617 INFO         Stash has been locked for maintenance. It may be unlocked with token: cc8d22828e07758d792235137ffb103c1eba8968
+    2015-06-05 19:48:21,995 INFO         Starting database backup on Stash. It may be cancelled with token: 55c2c8140680cf0cdba75034a1978a101d7a20cb
+    2015-06-05 19:48:26,286 INFO   (13%) Verifying files in Stash home "/mnt/datastore1/stash/home"
+    2015-06-05 19:48:35,592 INFO   (50%) Verifying Stash home
+    2015-06-05 19:48:43,571 INFO   (50%) Backing up Stash home
+    2015-06-05 19:48:50,347 INFO   (56%) Backing up Stash home
+    2015-06-05 19:48:55,350 INFO   (58%) Backing up Stash home
+    2015-06-05 19:49:00,254 INFO   (60%) Backing up Stash home
+    2015-06-05 19:49:09,690 INFO   (61%) Backing up Stash home
+    2015-06-05 19:49:14,742 INFO   (61%) Backing up Stash home
+    2015-06-05 19:49:21,457 INFO   (68%) Backing up Stash home
+    2015-06-05 19:49:32,674 INFO   (71%) Backing up Stash home
+    2015-06-05 19:50:09,190 INFO   (73%) Backing up Stash home
+    2015-06-05 19:50:14,190 INFO   (73%) Backing up Stash home
+    2015-06-05 19:50:23,108 INFO   (90%) Backing up Stash home
+    2015-06-05 19:50:28,157 INFO   (90%) Backing up Stash home
+    2015-06-05 19:50:33,058 INFO   (98%) Waiting on Stash database backup to complete
+    2015-06-05 19:50:35,248 INFO  (100%) Waiting on Stash database backup to complete
+    2015-06-05 19:50:40,248 INFO  (100%) Stash has completed backing up the database
+    2015-06-05 19:50:40,443 INFO  (100%) Downloading database backup zip from Stash
+    2015-06-05 19:50:40,727 INFO  (100%) Backup complete: /mnt/datastore1/stash/backup/backups/stash-20150605-195040-720.tar
+    2015-06-05 19:50:40,734 INFO  (100%) Unlocking Stash using token: cc8d22828e07758d792235137ffb103c1eba8968
+    (19:50:41) Created backup archive '/mnt/datastore1/stash/backup/backups/stash-20150605-195040-720.tar', size: 3049226240 bytes
+    (19:51:36) Checksum of backup archive '/mnt/datastore1/stash/backup/backups/stash-20150605-195040-720.tar': e742a5783dc0242768b9b8d90dff715c463a7c1b
