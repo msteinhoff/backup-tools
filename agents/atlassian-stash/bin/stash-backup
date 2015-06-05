@@ -73,12 +73,21 @@ function execute_backup_client
         -Dbackup.home="$BACKUP_HOME_DIR" \
         -jar $STASH_BACKUP_CLIENT_JAR || return $?
 
-    # TODO how do we get the backup file name?
-    # use some implicit find magic, e.g. find latest .tar file in backup home dir?
-    ARCHIVE_NAME=idunnolol.tar
-    
-    local size=`stat -c%s $BACKUP_HOME_DIR/$ARCHIVE_NAME`
-    notify "Created backup archive '$BACKUP_HOME_DIR/$ARCHIVE_NAME', size: $size bytes"
+    # Assumptions:
+    # - The SBC writes a .tar backup archive to the backups subfolder of the
+    #   backup home directory
+    # - Between the execution of the SBC and the next command, no other .tar
+    #   files are written to the backup home directory
+    # - If the backup client has finished successfully, the latest tar file in
+    #   the backups subfolder will be the latest archive
+    local archive_path=$(ls -1t $BACKUP_HOME_DIR/backups/*.tar | head -1)
+
+    [ ! -z $archive_path ] && [ -f $archive_path ] || { notify_error "Backup archive at '$archive_path' is not a file"; return 1; }
+
+    local size=$(stat -c%s $archive_path)
+    notify "Created backup archive '$archive_path', size: $size bytes"
+
+    ARCHIVE_NAME=$(basename $archive_path)
 }
 
 function calculate_checksum
