@@ -30,7 +30,7 @@ function notify
     cat -v $LOGFILE | mail -s "$result on $hostname" $RECIPIENTS
 }
 
-function cleanup_logs
+function consolidate_log
 {
     [ -f $GLOBAL_LOGFILE ] && echo "" >> $GLOBAL_LOGFILE
     cat $LOGFILE >> $GLOBAL_LOGFILE
@@ -41,4 +41,4 @@ check_config || exit 1
 
 run "$@" && notify "successful $ACTION" || notify "failed $ACTION"
 
-cleanup_logs
+consolidate_log
