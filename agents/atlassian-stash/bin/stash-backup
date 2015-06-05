@@ -66,11 +66,12 @@ function execute_backup_client
     notify "Executing stash backup client"
 
     java \
-        -jar $STASH_BACKUP_CLIENT_JAR \
-        -Dstash.home="$STASH_HOME_DIR"
+        -Dstash.home="$STASH_HOME_DIR" \
         -Dstash.user="$STASH_USER" \
         -Dstash.password="$STASH_PASSWORD" \
-        -Dstash.baseUrl="$STASH_BASEURL" || return $?
+        -Dstash.baseUrl="$STASH_BASEURL" \
+        -Dbackup.home="$BACKUP_HOME_DIR" \
+        -jar $STASH_BACKUP_CLIENT_JAR || return $?
 
     # TODO how do we get the backup file name?
     # use some implicit find magic, e.g. find latest .tar file in backup home dir?
