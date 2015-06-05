@@ -39,6 +39,9 @@ used for rudimentary consistency checks.
 
 ## Configuration
 
+*Note:* Make sure the `stash-backup.conf` file contains sensitive credentials.
+Make sure it is only readable by root (`$ chmod 0600 /etc/stash-backup.conf`).
+
 - `STASH_BACKUP_CLIENT_JAR`
 
     Absolute path to the `stash-backup-client.jar` file provided by the backup
