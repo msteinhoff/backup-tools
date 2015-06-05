@@ -48,7 +48,7 @@ used for rudimentary consistency checks.
 
 - `STASH_HOME_DIR`
 
-    Value of the `stash.home` java property.
+    Value for the `stash.home` java property.
 
     From the Stash backup client documentation:
 
@@ -59,7 +59,7 @@ used for rudimentary consistency checks.
 
 - `STASH_USER`
 
-    Value of the `stash.user` java property.
+    Value for the `stash.user` java property.
 
     From the Stash backup client documentation:
 
@@ -70,7 +70,7 @@ used for rudimentary consistency checks.
 
 - `STASH_PASSWORD`
 
-    Value of the `stash.password` java property.
+    Value for the `stash.password` java property.
 
     From the Stash backup client documentation:
 
@@ -81,7 +81,7 @@ used for rudimentary consistency checks.
 
 - `STASH_BASEURL`
 
-    Value of the `stash.baseUrl` java property.
+    Value for the `stash.baseUrl` java property.
 
     From the Stash backup client documentation:
 
@@ -92,7 +92,7 @@ used for rudimentary consistency checks.
 
 - `BACKUP_HOME_DIR`
 
-    Value of the `backup.home` java property.
+    The separate Stash backup directory, value for the `backup.home` java property.
 
     From the Stash backup client documentation:
 

@@ -71,7 +71,7 @@ archive. This can be used for rudimentary consistency checks.
 
 - `BACKUP_HOME_DIR`
 
-    The separate backup directory.
+    The separate Confluence backup directory.
 
     Default: `/tmp/confluence-backup`
 
