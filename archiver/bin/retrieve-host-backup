@@ -1,14 +1,60 @@
 #!/bin/bash
 # https://github.com/catapullt/backup-tools
 #
-# TODO WIP
-
-[ "$1" = "" ] && { echo "usage: $0 [ssh-target-name] [remote-directory] [local-directory]"; exit 1; }
-
-TARGET=$1
+REMOTE_HOST=$1
 DIR_REMOTE_DATA=$2
 DIR_LOCAL_DATA=$3
 
-[ ! -d $DIR_LOCAL_DATA/$TARGET ] && mkdir -p $DIR_LOCAL_DATA/$TARGET
+function log_stdout
+{
+    TIME=`date +%H:%M:%S`
+    echo "($TIME) $@"
+}
 
-rsync -v --archive --remove-source-files --numeric-ids $TARGET:$DIR_REMOTE_DATA $DIR_LOCAL_DATA/$TARGET
+function log_stderr
+{
+    TIME=`date +%H:%M:%S`
+    echo "($TIME) $@" >&2
+}
+
+function notify
+{
+    log_stdout "$@"
+}
+
+function notify_error
+{
+    log_stderr "Error: $@"
+}
+
+function fail
+{
+    notify_error "$@"
+
+    log_stderr "Exiting now."
+    exit 1
+}
+
+function check_parameters
+{
+    [ -z "$REMOTE_HOST" ] && { notify_error "REMOTE_HOST empty"; return 1; }
+    [ -z "$DIR_REMOTE_DATA" ] && { notify_error "DIR_REMOTE_DATA empty"; return 1; }
+    [ -z "$DIR_LOCAL_DATA" ] && { notify_error "DIR_LOCAL_DATA empty"; return 1; }
+
+    [ ! -d "$DIR_LOCAL_DATA/$REMOTE_HOST" ] && { notify_error "Local directory $DIR_LOCAL_DATA/$REMOTE_HOST is not a directory"; return 1; }
+
+    return 0
+}
+
+function retrieve_data_from_remote_host
+{
+    notify "Retrieving data from host '$REMOTE_HOST'"
+
+    rsync -v --archive --remove-source-files --numeric-ids $REMOTE_HOST:$DIR_REMOTE_DATA/ $DIR_LOCAL_DATA/$REMOTE_HOST || return $?
+
+    return 0
+}
+
+check_parameters || fail "Invalid parameters"
+
+retrieve_data_from_remote_host || fail "Could not retrieve data from remote host"
