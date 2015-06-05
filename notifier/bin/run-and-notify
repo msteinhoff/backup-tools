@@ -3,8 +3,8 @@
 
 COMMAND="$@"
 ACTION=${ACTION:-backup}
-LOGFILE=/tmp/run-and-notify.log
-GLOBAL_LOGFILE=/var/log/run-and-notify.log
+LOGFILE=${LOGFILE:-/tmp/run-and-notify.log}
+GLOBAL_LOGFILE=${GLOBAL_LOGFILE:-/var/log/run-and-notify.log}
 
 function check_config
 {
