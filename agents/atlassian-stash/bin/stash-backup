@@ -55,8 +55,8 @@ function check_config
     [ -z "$STASH_BASEURL" ] && { notify_error "STASH_BASEURL empty"; return 1; }
     [ -z "$BACKUP_HOME_DIR" ] && { notify_error "BACKUP_HOME_DIR empty"; return 1; }
 
-    [ ! -f "$STASH_BACKUP_CLIENT_JAR" || ! -r "$STASH_BACKUP_CLIENT_JAR" ] && { notify_error "STASH_BACKUP_CLIENT_JAR $STASH_BACKUP_CLIENT_JAR is not a readable file"; return 1; }
-    [ ! -d "$BACKUP_HOME_DIR" || ! -w "$BACKUP_HOME_DIR" ] && { notify_error "BACKUP_HOME_DIR $BACKUP_HOME_DIR is not a writable directory"; return 1; }
+    [ ! -f "$STASH_BACKUP_CLIENT_JAR" ] || [ ! -r "$STASH_BACKUP_CLIENT_JAR" ] && { notify_error "STASH_BACKUP_CLIENT_JAR $STASH_BACKUP_CLIENT_JAR is not a readable file"; return 1; }
+    [ ! -d "$BACKUP_HOME_DIR" ] || [ ! -w "$BACKUP_HOME_DIR" ] && { notify_error "BACKUP_HOME_DIR $BACKUP_HOME_DIR is not a writable directory"; return 1; }
 
     return 0
 }
